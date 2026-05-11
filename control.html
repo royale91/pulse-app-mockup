@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>control. — Agent Black marketing OS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0a0807;
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ============ TOP BAR ============ */
+  .topbar {
+    height: 56px;
+    background: rgba(14, 12, 10, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center;
+    padding: 0 24px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .brand-mark {
+    font-family: 'Instrument Serif', serif;
+    font-size: 24px; letter-spacing: -0.5px; font-style: italic;
+    color: #fff; margin-right: 28px;
+  }
+  .brand-mark i { color: #e8c89a; font-style: italic; }
+  .account {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 12px; border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px; font-size: 12px; color: #ccc; font-weight: 500;
+  }
+  .account .dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 8px rgba(74,222,128,0.6); }
+  .topbar-right {
+    margin-left: auto; display: flex; align-items: center; gap: 12px;
+  }
+  .top-btn {
+    padding: 8px 14px; font-size: 12px; font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;
+    background: transparent; color: #ccc; cursor: pointer; font-family: inherit;
+  }
+  .top-btn.primary {
+    background: #e8c89a; color: #0a0807; border-color: #e8c89a;
+  }
+  .icon-btn {
+    width: 36px; height: 36px; border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    color: #aaa; font-size: 14px; cursor: pointer;
+  }
+
+  /* ============ LAYOUT ============ */
+  .shell { display: flex; height: calc(100vh - 56px); min-height: 800px; }
+
+  .sidebar {
+    width: 260px; flex-shrink: 0;
+    background: rgba(14,12,10,0.6);
+    border-right: 1px solid rgba(255,255,255,0.05);
+    padding: 20px 14px;
+    overflow-y: auto;
+  }
+  .sb-label {
+    font-size: 9px; letter-spacing: 2.5px; color: #555;
+    font-weight: 700; text-transform: uppercase;
+    padding: 0 10px 12px;
+  }
+  .project {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 10px; border-radius: 8px; cursor: pointer;
+    margin-bottom: 2px; border: 1px solid transparent;
+    transition: background 0.15s;
+  }
+  .project:hover { background: rgba(255,255,255,0.03); }
+  .project.active {
+    background: rgba(232,200,154,0.08);
+    border-color: rgba(232,200,154,0.18);
+  }
+  .project .indicator {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #444; flex-shrink: 0;
+  }
+  .project.active .indicator { background: #e8c89a; box-shadow: 0 0 10px rgba(232,200,154,0.7); }
+  .project.live .indicator { background: #4ade80; }
+  .project-info { flex: 1; min-width: 0; }
+  .project-name {
+    font-size: 13px; color: #eee; font-weight: 600;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .project.active .project-name { color: #fff; }
+  .project-sub {
+    font-size: 10px; color: #666; margin-top: 2px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .project-count {
+    font-size: 10px; color: #888; font-family: 'JetBrains Mono', monospace;
+    background: rgba(255,255,255,0.04); padding: 2px 6px; border-radius: 4px;
+  }
+  .add-project {
+    margin-top: 10px; padding: 10px;
+    border: 1px dashed rgba(255,255,255,0.1); border-radius: 8px;
+    color: #666; font-size: 12px; text-align: center; cursor: pointer;
+  }
+
+  /* ============ MAIN ============ */
+  .main { flex: 1; overflow-y: auto; padding: 28px 36px; }
+
+  .breadcrumb {
+    font-size: 11px; color: #666; letter-spacing: 1.5px;
+    text-transform: uppercase; font-weight: 600; margin-bottom: 10px;
+  }
+  .breadcrumb i { color: #888; }
+  .campaign-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    margin-bottom: 20px; padding-bottom: 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .campaign-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 44px; line-height: 1.05; letter-spacing: -1.5px;
+    color: #fff; font-weight: 400; margin-bottom: 12px;
+  }
+  .campaign-title em { color: #e8c89a; font-style: italic; }
+  .meta-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 10px; border-radius: 100px;
+    font-size: 11px; color: #aaa; font-weight: 500;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.02);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .pill.live {
+    color: #4ade80; border-color: rgba(74,222,128,0.2);
+    background: rgba(74,222,128,0.05);
+  }
+  .pill.live::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: #4ade80; box-shadow: 0 0 8px rgba(74,222,128,0.7);
+  }
+
+  .campaign-stats {
+    display: flex; gap: 28px; padding-top: 6px;
+  }
+  .stat .v {
+    font-family: 'Instrument Serif', serif; font-size: 28px;
+    color: #fff; line-height: 1; letter-spacing: -1px;
+  }
+  .stat .l {
+    font-size: 10px; color: #666; letter-spacing: 1.5px;
+    text-transform: uppercase; font-weight: 600; margin-top: 6px;
+  }
+  .stat .v em { color: #e8c89a; font-style: normal; }
+
+  /* ====== CONTROL ROW ====== */
+  .control-row {
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    margin-bottom: 22px;
+  }
+  .platforms { display: flex; gap: 6px; }
+  .plat {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 11px; border-radius: 8px;
+    font-size: 11px; font-weight: 600; cursor: pointer;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    color: #ccc;
+  }
+  .plat.on {
+    color: #fff;
+    background: rgba(232,200,154,0.1);
+    border-color: rgba(232,200,154,0.3);
+  }
+  .plat .pdot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; }
+  .plat.off .pdot { background: #444; }
+  .plat .lbl { font-size: 10px; color: #888; font-weight: 500; }
+
+  .toggle-grp {
+    margin-left: auto; display: flex; align-items: center; gap: 14px;
+    font-size: 11px; color: #888;
+  }
+  .toggle {
+    width: 36px; height: 20px; background: rgba(255,255,255,0.08);
+    border-radius: 100px; position: relative; cursor: pointer;
+  }
+  .toggle.on { background: #4ade80; }
+  .toggle::after {
+    content: ''; position: absolute; top: 2px; left: 2px;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: #fff; transition: transform 0.2s;
+  }
+  .toggle.on::after { transform: translateX(16px); }
+
+  .filter-row {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .ai-tag {
+    padding: 8px 14px; border-radius: 8px;
+    background: linear-gradient(135deg, rgba(232,200,154,0.12), rgba(232,200,154,0.04));
+    border: 1px solid rgba(232,200,154,0.18);
+    font-size: 12px; color: #e8c89a; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .ai-tag::before { content: '✦'; font-size: 14px; }
+  .gen-btn {
+    padding: 8px 14px; border-radius: 8px;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    color: #ccc; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit;
+  }
+  .filter {
+    padding: 8px 12px; font-size: 11px; color: #888;
+    border: 1px solid rgba(255,255,255,0.06); border-radius: 8px;
+    cursor: pointer; background: transparent;
+  }
+  .filter:hover { color: #ccc; border-color: rgba(255,255,255,0.1); }
+
+  /* ====== AD GRID ====== */
+  .ad-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+  }
+  .ad {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .ad:hover {
+    transform: translateY(-2px);
+    border-color: rgba(232,200,154,0.3);
+  }
+  .ad.selected {
+    border-color: #e8c89a;
+    box-shadow: 0 0 0 2px rgba(232,200,154,0.2), 0 16px 40px rgba(0,0,0,0.4);
+  }
+  .ad-img {
+    aspect-ratio: 4 / 5; background: #1a1410;
+    overflow: hidden; position: relative;
+  }
+  .ad-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ad-img::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.7) 100%);
+  }
+  .ad-overlay {
+    position: absolute; bottom: 10px; left: 10px; right: 10px; z-index: 2;
+    color: #fff;
+    font-size: 12px; font-weight: 600;
+    line-height: 1.3; letter-spacing: -0.2px;
+  }
+  .ad-status {
+    position: absolute; top: 10px; left: 10px; z-index: 3;
+    padding: 4px 8px; border-radius: 4px;
+    font-size: 9px; font-weight: 800; letter-spacing: 1.2px;
+  }
+  .ad-status.live { background: #4ade80; color: #0a1f0d; }
+  .ad-status.draft { background: rgba(0,0,0,0.7); color: #ccc; border: 1px solid rgba(255,255,255,0.2); }
+  .ad-status.test { background: #e8c89a; color: #0a0807; }
+  .ad-platforms {
+    position: absolute; top: 10px; right: 10px; z-index: 3;
+    display: flex; gap: 4px;
+  }
+  .ad-platforms .p {
+    width: 22px; height: 22px; border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 800; color: #fff;
+  }
+  .p.meta { background: #1877f2; }
+  .p.tt { background: #000; border: 1px solid #25f4ee; color: #25f4ee; }
+  .p.pin { background: #e60023; }
+  .p.pulse { background: #e8c89a; color: #0a0807; }
+  .p.x { background: #000; }
+
+  .ad-meta {
+    padding: 10px 12px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 11px;
+  }
+  .ad-meta .ctr {
+    font-family: 'JetBrains Mono', monospace; color: #4ade80; font-weight: 600;
+  }
+  .ad-meta .vname { color: #888; font-family: 'JetBrains Mono', monospace; font-size: 10px; }
+
+  /* Text-only ad */
+  .ad.text-ad .ad-img {
+    background: linear-gradient(135deg, #1a1410, #2a1f17);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .ad.text-ad .ad-img img { display: none; }
+  .ad.text-ad .ad-img::after { display: none; }
+  .text-headline {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px; line-height: 1.1; color: #fff;
+    text-align: center; letter-spacing: -0.5px;
+  }
+  .text-headline em { color: #e8c89a; font-style: italic; }
+
+  /* "Generate more" tile */
+  .ad.gen-more .ad-img {
+    background: linear-gradient(135deg, rgba(232,200,154,0.08), rgba(232,200,154,0.02));
+    border: 1px dashed rgba(232,200,154,0.3);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .ad.gen-more .ad-img img { display: none; }
+  .ad.gen-more .ad-img::after { display: none; }
+  .gen-more-content { text-align: center; padding: 20px; }
+  .gen-more-content .icon {
+    font-size: 32px; color: #e8c89a; margin-bottom: 12px;
+  }
+  .gen-more-content .label {
+    font-size: 13px; color: #e8c89a; font-weight: 700; margin-bottom: 4px;
+  }
+  .gen-more-content .sub {
+    font-size: 10px; color: #888; line-height: 1.5;
+  }
+
+  /* ====== FOOTER NAV ====== */
+  .footer-link {
+    margin-top: 56px; padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; color: #666;
+  }
+  .footer-link a { color: #e8c89a; font-weight: 600; }
+
+  /* responsive */
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .campaign-title { font-size: 32px; }
+    .campaign-stats { gap: 18px; flex-wrap: wrap; }
+    .topbar-right .top-btn { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand-mark">control<i>.</i></div>
+  <div class="account">
+    <span class="dot"></span>
+    Agent Black
+  </div>
+  <div class="topbar-right">
+    <button class="top-btn">Reports</button>
+    <button class="top-btn primary">＋ New Campaign</button>
+    <div class="icon-btn">⚙</div>
+  </div>
+</div>
+
+<div class="shell">
+
+  <!-- =============== SIDEBAR =============== -->
+  <aside class="sidebar">
+    <div class="sb-label">Portfolio · 9 active</div>
+
+    <div class="project active live">
+      <div class="indicator"></div>
+      <div class="project-info">
+        <div class="project-name">pulse.</div>
+        <div class="project-sub">Spring Launch · 47 ads</div>
+      </div>
+      <div class="project-count">47</div>
+    </div>
+
+    <div class="project live">
+      <div class="indicator"></div>
+      <div class="project-info">
+        <div class="project-name">Distressd</div>
+        <div class="project-sub">Q2 Listings · 5 cities</div>
+      </div>
+      <div class="project-count">23</div>
+    </div>
+
+    <div class="project live">
+      <div class="indicator"></div>
+      <div class="project-info">
+        <div class="project-name">RoofPinnacle</div>
+        <div class="project-sub">Storm Targeting · TX/FL</div>
+      </div>
+      <div class="project-count">31</div>
+    </div>
+
+    <div class="project">
+      <div class="indicator"></div>
+      <div class="project-info">
+        <div class="project-name">Car Hawk</div>
+        <div class="project-sub">FSBO Push · Drafting</div>
+      </div>
+      <div class="project-count">18</div>
+    </div>
+
+    <div class="project live">
+      <div class="indicator"></div>
+      <div class="project-info">
+        <div class="project-name">Cookora</div>
+        <div class="project-sub">Beat Drop · Weekly</div>
+      </div>
+      <div class="project-count">29</div>
+    </div>
+
+    <div class="project">
+      <div class="indicator"></div>
+      <div class="project-info">
+        <div class="project-name">FundCode</div>
+        <div class="project-sub">New Creditor · Paused</div>
+      </div>
+      <div class="project-count">14</div>
+    </div>
+
+    <div class="project live">
+      <div class="indicator"></div>
+      <div class="project-info">
+        <div class="project-name">Forever Frames</div>
+        <div class="project-sub">Funeral Directors</div>
+      </div>
+      <div class="project-count">11</div>
+    </div>
+
+    <div class="project live">
+      <div class="indicator"></div>
+      <div class="project-info">
+        <div class="project-name">Verdict Vision</div>
+        <div class="project-sub">Tampa PI Firms</div>
+      </div>
+      <div class="project-count">22</div>
+    </div>
+
+    <div class="project">
+      <div class="indicator"></div>
+      <div class="project-info">
+        <div class="project-name">Plumbing Co.</div>
+        <div class="project-sub">Naming · Pre-launch</div>
+      </div>
+      <div class="project-count">—</div>
+    </div>
+
+    <div class="add-project">＋ Add Project</div>
+  </aside>
+
+  <!-- =============== MAIN =============== -->
+  <main class="main">
+
+    <div class="breadcrumb">PORTFOLIO <i>/</i> PULSE. <i>/</i> SPRING LAUNCH</div>
+
+    <div class="campaign-head">
+      <div>
+        <h1 class="campaign-title">Spring Launch <em>Campaign</em></h1>
+        <div class="meta-pills">
+          <span class="pill live">LIVE</span>
+          <span class="pill">$2,400 / week</span>
+          <span class="pill">12 / 47 selected</span>
+          <span class="pill">Started May 6</span>
+        </div>
+      </div>
+      <div class="campaign-stats">
+        <div class="stat"><div class="v">1.2<em>M</em></div><div class="l">Reach / wk</div></div>
+        <div class="stat"><div class="v">4.7<em>%</em></div><div class="l">Avg CTR</div></div>
+        <div class="stat"><div class="v">$0.42</div><div class="l">CPC</div></div>
+      </div>
+    </div>
+
+    <!-- platforms + auto -->
+    <div class="control-row">
+      <div class="platforms">
+        <div class="plat on"><span class="pdot"></span> Meta</div>
+        <div class="plat on"><span class="pdot"></span> TikTok</div>
+        <div class="plat on"><span class="pdot"></span> Pinterest</div>
+        <div class="plat on"><span class="pdot"></span> pulse Feed</div>
+        <div class="plat off"><span class="pdot"></span> X / Twitter</div>
+        <div class="plat off"><span class="pdot"></span> YouTube Shorts</div>
+      </div>
+      <div class="toggle-grp">
+        <span>Auto-publish</span>
+        <div class="toggle on"></div>
+      </div>
+    </div>
+
+    <!-- filter row -->
+    <div class="filter-row">
+      <div class="ai-tag">AI generated 47 variants from your brief</div>
+      <button class="gen-btn">＋ Generate 25 more</button>
+      <button class="filter">Type: All ▾</button>
+      <button class="filter">Sort: Est. CTR ▾</button>
+      <button class="filter">Status: All ▾</button>
+    </div>
+
+    <!-- AD GRID -->
+    <div class="ad-grid">
+
+      <div class="ad selected">
+        <div class="ad-img">
+          <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=500&q=80" alt="">
+          <div class="ad-status live">LIVE</div>
+          <div class="ad-platforms"><div class="p meta">f</div><div class="p tt">t</div><div class="p pulse">p</div></div>
+          <div class="ad-overlay">"Style that doesn't ask permission."</div>
+        </div>
+        <div class="ad-meta"><span class="vname">v.04</span><span class="ctr">CTR 5.8%</span></div>
+      </div>
+
+      <div class="ad selected">
+        <div class="ad-img">
+          <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=500&q=80" alt="">
+          <div class="ad-status live">LIVE</div>
+          <div class="ad-platforms"><div class="p meta">f</div><div class="p pin">p</div></div>
+          <div class="ad-overlay">"The fit. The forecast. The future."</div>
+        </div>
+        <div class="ad-meta"><span class="vname">v.07</span><span class="ctr">CTR 5.2%</span></div>
+      </div>
+
+      <div class="ad text-ad">
+        <div class="ad-img">
+          <div class="text-headline">Skip the<br><em>celebrity-stylist</em><br>tax.</div>
+          <div class="ad-status test">A/B</div>
+          <div class="ad-platforms"><div class="p meta">f</div><div class="p x">x</div></div>
+        </div>
+        <div class="ad-meta"><span class="vname">v.11</span><span class="ctr">CTR 4.9%</span></div>
+      </div>
+
+      <div class="ad selected">
+        <div class="ad-img">
+          <img src="https://images.unsplash.com/photo-1492447273231-0f8fecec1e3a?w=500&q=80" alt="">
+          <div class="ad-status live">LIVE</div>
+          <div class="ad-platforms"><div class="p tt">t</div><div class="p pulse">p</div></div>
+          <div class="ad-overlay">"Drop your fit. Crowd swings the heat."</div>
+        </div>
+        <div class="ad-meta"><span class="vname">v.12</span><span class="ctr">CTR 4.7%</span></div>
+      </div>
+
+      <div class="ad">
+        <div class="ad-img">
+          <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=500&q=80" alt="">
+          <div class="ad-status draft">DRAFT</div>
+          <div class="ad-platforms"><div class="p meta">f</div></div>
+          <div class="ad-overlay">"Slouch tailoring is rising 340%."</div>
+        </div>
+        <div class="ad-meta"><span class="vname">v.18</span><span class="ctr">CTR 4.5%</span></div>
+      </div>
+
+      <div class="ad selected">
+        <div class="ad-img">
+          <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=500&q=80" alt="">
+          <div class="ad-status live">LIVE</div>
+          <div class="ad-platforms"><div class="p pin">p</div><div class="p meta">f</div></div>
+          <div class="ad-overlay">"Your stylist friend. In your pocket."</div>
+        </div>
+        <div class="ad-meta"><span class="vname">v.21</span><span class="ctr">CTR 4.4%</span></div>
+      </div>
+
+      <div class="ad text-ad">
+        <div class="ad-img">
+          <div class="text-headline"><em>Burgundy</em> is the next move.</div>
+          <div class="ad-status test">A/B</div>
+          <div class="ad-platforms"><div class="p pin">p</div></div>
+        </div>
+        <div class="ad-meta"><span class="vname">v.23</span><span class="ctr">CTR 4.2%</span></div>
+      </div>
+
+      <div class="ad">
+        <div class="ad-img">
+          <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500&q=80" alt="">
+          <div class="ad-status draft">DRAFT</div>
+          <div class="ad-platforms"><div class="p tt">t</div></div>
+          <div class="ad-overlay">"See what's coming next, before it breaks."</div>
+        </div>
+        <div class="ad-meta"><span class="vname">v.27</span><span class="ctr">CTR 4.1%</span></div>
+      </div>
+
+      <div class="ad selected">
+        <div class="ad-img">
+          <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=500&q=80" alt="">
+          <div class="ad-status live">LIVE</div>
+          <div class="ad-platforms"><div class="p pulse">p</div></div>
+          <div class="ad-overlay">"Wedding Friday? You're covered."</div>
+        </div>
+        <div class="ad-meta"><span class="vname">v.31</span><span class="ctr">CTR 3.9%</span></div>
+      </div>
+
+      <div class="ad">
+        <div class="ad-img">
+          <img src="https://images.unsplash.com/photo-1551489186-cf8726f514f8?w=500&q=80" alt="">
+          <div class="ad-status draft">DRAFT</div>
+          <div class="ad-platforms"><div class="p meta">f</div><div class="p tt">t</div></div>
+          <div class="ad-overlay">"Rate fits. Train the brain."</div>
+        </div>
+        <div class="ad-meta"><span class="vname">v.34</span><span class="ctr">CTR 3.7%</span></div>
+      </div>
+
+      <div class="ad">
+        <div class="ad-img">
+          <img src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=500&q=80" alt="">
+          <div class="ad-status draft">DRAFT</div>
+          <div class="ad-platforms"><div class="p tt">t</div><div class="p pulse">p</div></div>
+          <div class="ad-overlay">"87% hot. Or so the crowd says."</div>
+        </div>
+        <div class="ad-meta"><span class="vname">v.38</span><span class="ctr">CTR 3.5%</span></div>
+      </div>
+
+      <div class="ad gen-more">
+        <div class="ad-img">
+          <div class="gen-more-content">
+            <div class="icon">✦</div>
+            <div class="label">Generate 25 more</div>
+            <div class="sub">AI will riff on your top 3<br>performing variants</div>
+          </div>
+        </div>
+        <div class="ad-meta"><span class="vname">+25</span><span style="color:#e8c89a;">cost: $4</span></div>
+      </div>
+
+    </div>
+
+    <!-- footer link to consumer view -->
+    <div class="footer-link">
+      <span>This is the marketing OS. The consumer-facing app is a separate skin.</span>
+      <a href="./">← Back to pulse. consumer mockup</a>
+    </div>
+
+  </main>
+
+</div>
+
+</body>
+</html>
