@@ -23,7 +23,7 @@
       radial-gradient(ellipse 60% 40% at 100% 100%, rgba(232, 90, 79, 0.06) 0%, transparent 60%);
   }
 
-  .wrap { position: relative; z-index: 1; padding: 48px 32px 80px; max-width: 1280px; margin: 0 auto; }
+  .wrap { position: relative; z-index: 1; padding: 48px 32px 80px; max-width: 1340px; margin: 0 auto; }
 
   .header { text-align: center; margin-bottom: 56px; }
   .eyebrow {
@@ -286,6 +286,65 @@
   }
   .feature-cap .desc { font-size: 12px; color: #888; line-height: 1.6; }
 
+  /* --- PHONE 4: BOOK A STYLIST --- */
+  .bs-chips { display: flex; gap: 6px; padding: 4px 18px 12px; }
+  .bs-chip {
+    font-size: 10px; font-weight: 600; padding: 6px 11px;
+    border-radius: 100px; white-space: nowrap;
+    background: rgba(255,255,255,0.05); color: #999;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .bs-chip.active { background: #e8c89a; color: #0e0c0a; border-color: #e8c89a; }
+  .bs-featured {
+    margin: 0 16px 12px; border-radius: 18px; overflow: hidden;
+    background: #1a1410; border: 1px solid rgba(255,255,255,0.06);
+  }
+  .bs-feat-img { height: 124px; position: relative; overflow: hidden; }
+  .bs-feat-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .bs-feat-tag {
+    position: absolute; top: 10px; left: 10px;
+    background: rgba(14,12,10,0.85); color: #e8c89a;
+    font-size: 8px; font-weight: 800; padding: 4px 8px;
+    border-radius: 4px; letter-spacing: 1.2px;
+  }
+  .bs-feat-body { padding: 12px 14px 14px; }
+  .bs-feat-name {
+    font-family: 'Instrument Serif', serif; font-size: 19px;
+    color: #fff; letter-spacing: -0.3px;
+  }
+  .bs-feat-spec { font-size: 10px; color: #888; margin-top: 2px; }
+  .bs-meta-row {
+    display: flex; align-items: center; gap: 7px;
+    margin: 8px 0 12px; font-size: 10px; color: #aaa;
+  }
+  .bs-stars { color: #e8c89a; letter-spacing: 1px; }
+  .bs-dot { color: #444; }
+  .bs-book { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .bs-price { font-size: 11px; color: #888; }
+  .bs-price b {
+    font-family: 'Instrument Serif', serif; font-size: 22px;
+    color: #fff; font-weight: 400;
+  }
+  .bs-book-btn {
+    background: #e8c89a; color: #0e0c0a; border: none;
+    padding: 11px 18px; border-radius: 12px;
+    font-size: 12px; font-weight: 700; font-family: inherit; cursor: pointer;
+  }
+  .bs-list { padding: 0 16px; }
+  .bs-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 0; border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .bs-avatar { width: 38px; height: 38px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+  .bs-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .bs-row-info { flex: 1; min-width: 0; }
+  .bs-row-name { font-size: 12px; color: #fff; font-weight: 600; }
+  .bs-row-spec { font-size: 9px; color: #777; margin-top: 2px; }
+  .bs-row-price {
+    font-size: 14px; color: #e8c89a; font-weight: 400;
+    font-family: 'Instrument Serif', serif;
+  }
+
   .footer-cta {
     margin-top: 80px;
     text-align: center; max-width: 720px; margin-left: auto; margin-right: auto;
@@ -317,7 +376,7 @@
     <div class="eyebrow">Style intelligence · in your pocket</div>
     <h1 class="brand">pulse<i>.</i></h1>
     <p class="tagline">
-      Rate fits. <strong>See what's coming next.</strong> Skip the celebrity-stylist tax.
+      Rate fits. <strong>See what's coming next.</strong> Book a real stylist — skip the celebrity tax.
     </p>
   </div>
 
@@ -461,6 +520,69 @@
         <div class="tag">03 · PERSONAL</div>
         <div class="name">Your AI Brain</div>
         <div class="desc">Trained on every rating, comment and stylist note about you. Tells you yes or no instantly — no texting your stylist friend.</div>
+      </div>
+    </div>
+
+    <!-- ======================== PHONE 4: BOOK A STYLIST ======================== -->
+    <div class="phone-wrap" data-choice="stylist" onclick="toggleSelect(this)">
+      <div class="phone">
+        <div class="screen">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●●</span></div>
+          <div class="nav">
+            <div class="logo">pulse<i>.</i></div>
+            <div class="nav-icon">☆</div>
+          </div>
+          <div class="bs-chips">
+            <div class="bs-chip active">Wedding</div>
+            <div class="bs-chip">First date</div>
+            <div class="bs-chip">Interview</div>
+          </div>
+          <div class="bs-featured">
+            <div class="bs-feat-img">
+              <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80" alt="">
+              <div class="bs-feat-tag">★ TOP RATED</div>
+            </div>
+            <div class="bs-feat-body">
+              <div class="bs-feat-name">Jordan Vega</div>
+              <div class="bs-feat-spec">Editorial & red carpet · 8 yrs</div>
+              <div class="bs-meta-row">
+                <span class="bs-stars">★★★★★</span>
+                <span>4.9 (212)</span>
+                <span class="bs-dot">·</span>
+                <span>Virtual + NYC</span>
+              </div>
+              <div class="bs-book">
+                <div class="bs-price">from <b>$95</b> / session</div>
+                <button class="bs-book-btn">Book session</button>
+              </div>
+            </div>
+          </div>
+          <div class="bs-list">
+            <div class="bs-row">
+              <div class="bs-avatar"><img src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=120&q=80"></div>
+              <div class="bs-row-info">
+                <div class="bs-row-name">Aisha Brown</div>
+                <div class="bs-row-spec">★ 4.8 · Weddings & events · Virtual</div>
+              </div>
+              <div class="bs-row-price">$75</div>
+            </div>
+            <div class="bs-row">
+              <div class="bs-avatar"><img src="https://images.unsplash.com/photo-1542295669297-4d352b042bca?w=120&q=80"></div>
+              <div class="bs-row-info">
+                <div class="bs-row-name">Maya Chen</div>
+                <div class="bs-row-spec">★ 5.0 · Everyday & interviews · Virtual</div>
+              </div>
+              <div class="bs-row-price">$60</div>
+            </div>
+          </div>
+          <div class="home-indicator"></div>
+        </div>
+      </div>
+      <div class="feature-cap">
+        <div class="tag">04 · MARKETPLACE</div>
+        <div class="name">Book a Stylist</div>
+        <div class="desc">A real stylist for your wedding, date, or interview — virtual or in person. Transparent prices from $60. Not $27,000.</div>
       </div>
     </div>
 
