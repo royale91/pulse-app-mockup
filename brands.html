@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>pulse Brands — trend intel + line sheets + ad ops for fashion labels</title>
+<meta name="description" content="The operating system for emerging fashion brands. See what's rising before it breaks. Generate buyer-ready line sheets in 60 seconds. Run multi-platform ad ops from one dashboard.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+  body { font-family: 'Inter', -apple-system, sans-serif; background: #0a0807; color: #fff; min-height: 100vh; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  em { font-style: italic; color: #e8c89a; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* === BG ATMOSPHERE === */
+  .bg-glow {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(232,200,154,0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 100% 30%, rgba(232,90,79,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 0% 60%, rgba(74,222,128,0.03) 0%, transparent 60%);
+  }
+
+  .wrap { position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+
+  /* === NAV === */
+  .nav {
+    height: 68px; display: flex; align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    position: sticky; top: 0; background: rgba(10,8,7,0.85); backdrop-filter: blur(20px); z-index: 50;
+  }
+  .nav .brand {
+    font-family: 'Instrument Serif', serif; font-size: 24px; letter-spacing: -0.5px;
+    font-style: italic; color: #fff;
+  }
+  .nav .brand i { color: #e8c89a; }
+  .nav .brand .sub {
+    font-family: 'Inter', sans-serif; font-style: normal; font-weight: 600;
+    font-size: 11px; letter-spacing: 2px; color: #888; text-transform: uppercase;
+    margin-left: 10px; padding-left: 12px; border-left: 1px solid rgba(255,255,255,0.1);
+  }
+  .nav-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+  .nav-link { padding: 8px 14px; font-size: 13px; color: #aaa; font-weight: 500; }
+  .nav-link:hover { color: #fff; }
+  .nav-cta {
+    padding: 9px 18px; border-radius: 100px; font-size: 13px; font-weight: 700;
+    background: #e8c89a; color: #0a0807;
+  }
+
+  /* === HERO === */
+  .hero { padding: 90px 0 80px; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px; border-radius: 100px;
+    border: 1px solid rgba(232,200,154,0.25);
+    background: rgba(232,200,154,0.05);
+    font-size: 11px; color: #e8c89a; font-weight: 600;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .eyebrow::before { content: '✦'; }
+  .hero h1 {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: 96px; line-height: 0.95; letter-spacing: -3.5px;
+    margin-bottom: 28px; max-width: 900px;
+  }
+  .hero h1 em { font-style: italic; color: #e8c89a; }
+  .hero .lede {
+    font-size: 21px; line-height: 1.5; color: #aaa;
+    max-width: 640px; margin-bottom: 36px;
+  }
+  .hero .lede strong { color: #ddd; font-weight: 600; }
+  .hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 24px; border-radius: 100px;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+  }
+  .btn-primary { background: #e8c89a; color: #0a0807; border: 1px solid #e8c89a; }
+  .btn-ghost { background: transparent; color: #e8c89a; border: 1px solid rgba(232,200,154,0.4); }
+  .btn-ghost:hover { border-color: #e8c89a; }
+  .hero-meta {
+    margin-top: 28px; display: flex; gap: 22px; font-size: 11px;
+    color: #666; font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; flex-wrap: wrap;
+  }
+  .hero-meta span { color: #aaa; }
+  .hero-meta .l { color: #555; }
+
+  /* === SECTION HELPERS === */
+  .section { padding: 80px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+  .section-eyebrow {
+    font-size: 10px; letter-spacing: 3px; color: #666;
+    font-weight: 700; text-transform: uppercase; margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: 52px; line-height: 1; letter-spacing: -1.8px;
+    margin-bottom: 18px; max-width: 720px;
+  }
+  .section-title em { color: #e8c89a; }
+  .section-lede {
+    font-size: 17px; line-height: 1.6; color: #999; max-width: 620px; margin-bottom: 56px;
+  }
+
+  /* === PROBLEM ROW === */
+  .problem-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .prob {
+    padding: 28px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+  }
+  .prob .num {
+    font-family: 'Instrument Serif', serif; font-size: 36px;
+    color: #e8c89a; line-height: 1; margin-bottom: 16px; font-style: italic;
+  }
+  .prob h4 {
+    font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 12px;
+    letter-spacing: -0.3px;
+  }
+  .prob p { font-size: 14px; color: #999; line-height: 1.6; margin-bottom: 14px; }
+  .prob .cost {
+    display: inline-block; padding: 4px 10px; border-radius: 6px;
+    background: rgba(232,90,79,0.1); color: #e85a4f;
+    font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* === PRODUCT TRIO === */
+  .product-card {
+    display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: center;
+    padding: 60px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .product-card:last-child { border-bottom: none; }
+  .product-card.flip { grid-template-columns: 1.2fr 1fr; }
+  .product-card.flip .product-text { order: 2; }
+  .product-text .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 10px; letter-spacing: 2px; font-weight: 800;
+    padding: 5px 10px; border-radius: 4px; margin-bottom: 16px;
+  }
+  .product-text .badge.v1 { background: #4ade80; color: #0a1f0d; }
+  .product-text .badge.v2 { background: #e8c89a; color: #0a0807; }
+  .product-text .badge.v3 { background: rgba(255,255,255,0.08); color: #aaa; border: 1px solid rgba(255,255,255,0.12); }
+  .product-text h3 {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: 42px; line-height: 1; letter-spacing: -1.4px;
+    margin-bottom: 16px;
+  }
+  .product-text h3 em { color: #e8c89a; }
+  .product-text p {
+    font-size: 16px; color: #aaa; line-height: 1.65; margin-bottom: 14px;
+  }
+  .product-text ul { list-style: none; padding: 0; margin: 18px 0; }
+  .product-text li {
+    font-size: 14px; color: #ccc; padding: 6px 0; padding-left: 22px;
+    position: relative;
+  }
+  .product-text li::before {
+    content: '→'; position: absolute; left: 0; color: #e8c89a; font-weight: 700;
+  }
+  .product-cta {
+    margin-top: 22px; display: inline-flex; align-items: center; gap: 8px;
+    color: #e8c89a; font-size: 14px; font-weight: 600;
+  }
+
+  .product-visual {
+    background: linear-gradient(135deg, #1a1614 0%, #0e0c0a 100%);
+    border-radius: 20px; padding: 32px;
+    border: 1px solid rgba(255,255,255,0.06);
+    min-height: 320px; position: relative; overflow: hidden;
+  }
+  .product-visual::before {
+    content: ''; position: absolute; inset: -2px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(232,200,154,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Trend visual */
+  .tv-head {
+    font-size: 10px; letter-spacing: 2px; color: #666;
+    font-weight: 700; margin-bottom: 18px;
+  }
+  .tv-row {
+    display: flex; align-items: center; gap: 14px; padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .tv-thumb {
+    width: 44px; height: 44px; border-radius: 8px; overflow: hidden;
+    flex-shrink: 0;
+  }
+  .tv-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .tv-info { flex: 1; }
+  .tv-name { font-size: 14px; color: #fff; font-weight: 600; }
+  .tv-src { font-size: 10px; color: #666; margin-top: 3px; font-family: 'JetBrains Mono', monospace; }
+  .tv-arrow {
+    font-size: 11px; font-weight: 800; padding: 5px 9px; border-radius: 5px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .a-rise { color: #4ade80; background: rgba(74,222,128,0.1); }
+  .a-peak { color: #e8c89a; background: rgba(232,200,154,0.1); }
+  .a-fade { color: #777; background: rgba(255,255,255,0.04); }
+
+  /* Line sheet visual */
+  .ls-mini { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .ls-prod {
+    background: #1a1410; border-radius: 10px; overflow: hidden;
+    aspect-ratio: 4/5;
+  }
+  .ls-prod img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ls-mini-info {
+    margin-top: 14px; padding-top: 14px;
+    border-top: 1px dashed rgba(255,255,255,0.1);
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  }
+  .ls-mini-info .wsp { color: #fff; font-weight: 600; }
+  .ls-mini-info .srp { color: #888; }
+  .ls-mini-info .lbl { color: #555; letter-spacing: 1px; margin-right: 5px; }
+
+  /* Ad ops visual */
+  .ao-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .ao-tile {
+    aspect-ratio: 4/5; border-radius: 6px; overflow: hidden;
+    background: #1a1410; position: relative;
+  }
+  .ao-tile img { width: 100%; height: 100%; object-fit: cover; }
+  .ao-tile::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.6) 100%);
+  }
+  .ao-status {
+    position: absolute; top: 6px; left: 6px; z-index: 2;
+    font-size: 7px; font-weight: 800; letter-spacing: 1px;
+    padding: 2px 4px; background: #4ade80; color: #0a1f0d; border-radius: 3px;
+  }
+  .ao-mini-foot {
+    margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .plat-chip {
+    font-size: 9px; padding: 4px 8px; border-radius: 4px;
+    color: #fff; font-weight: 700; letter-spacing: 0.5px;
+  }
+  .pc-meta { background: #1877f2; }
+  .pc-tt { background: #000; border: 1px solid #25f4ee; color: #25f4ee; }
+  .pc-pin { background: #e60023; }
+  .pc-pulse { background: #e8c89a; color: #0a0807; }
+
+  /* === PRICING === */
+  .pricing-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .tier {
+    padding: 32px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    display: flex; flex-direction: column;
+  }
+  .tier.featured {
+    border-color: rgba(232,200,154,0.4);
+    background: linear-gradient(180deg, rgba(232,200,154,0.05), transparent);
+    position: relative;
+  }
+  .tier.featured::before {
+    content: 'V1 · LAUNCH'; position: absolute; top: -10px; left: 24px;
+    background: #4ade80; color: #0a1f0d;
+    font-size: 9px; font-weight: 800; letter-spacing: 1.5px;
+    padding: 4px 10px; border-radius: 4px;
+  }
+  .tier .tname {
+    font-family: 'Instrument Serif', serif; font-size: 26px;
+    font-style: italic; color: #fff; margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .tier .twhen {
+    font-size: 10px; letter-spacing: 1.5px; color: #666;
+    font-weight: 700; text-transform: uppercase; margin-bottom: 18px;
+  }
+  .tier .price {
+    font-family: 'Instrument Serif', serif;
+    font-size: 44px; color: #fff; line-height: 1;
+    margin-bottom: 4px; letter-spacing: -1.5px;
+  }
+  .tier .price em { color: #e8c89a; }
+  .tier .pmo { font-size: 12px; color: #666; margin-bottom: 22px; }
+  .tier ul { list-style: none; padding: 0; flex: 1; margin-bottom: 24px; }
+  .tier li {
+    padding: 8px 0; padding-left: 20px; position: relative;
+    font-size: 13px; color: #ccc; line-height: 1.5;
+  }
+  .tier li::before {
+    content: '✓'; position: absolute; left: 0; color: #e8c89a;
+    font-weight: 700;
+  }
+  .tier li.muted { color: #555; }
+  .tier li.muted::before { color: #444; }
+  .tier-cta {
+    padding: 12px; border-radius: 100px; text-align: center;
+    font-size: 13px; font-weight: 700; cursor: pointer;
+  }
+  .tier-cta.primary { background: #e8c89a; color: #0a0807; }
+  .tier-cta.ghost { background: rgba(255,255,255,0.05); color: #aaa; border: 1px solid rgba(255,255,255,0.08); }
+
+  /* === MARKET / WHY NOW === */
+  .market {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+  }
+  .market-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  .ms { padding: 20px; border-left: 2px solid rgba(232,200,154,0.3); }
+  .ms .v {
+    font-family: 'Instrument Serif', serif; font-size: 44px;
+    color: #fff; line-height: 1; letter-spacing: -1.5px;
+  }
+  .ms .v em { color: #e8c89a; }
+  .ms .l {
+    font-size: 11px; letter-spacing: 1.5px; color: #888;
+    font-weight: 600; text-transform: uppercase;
+    margin-top: 10px;
+  }
+
+  /* === FOOTER CTA === */
+  .footer-cta {
+    margin-top: 40px; padding: 64px 48px;
+    background: linear-gradient(135deg, rgba(232,200,154,0.08), rgba(232,90,79,0.04));
+    border: 1px solid rgba(232,200,154,0.2);
+    border-radius: 24px;
+    text-align: center;
+  }
+  .footer-cta h2 {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: 56px; line-height: 1; letter-spacing: -2px; margin-bottom: 20px;
+  }
+  .footer-cta h2 em { color: #e8c89a; }
+  .footer-cta p { font-size: 17px; color: #aaa; max-width: 540px; margin: 0 auto 30px; line-height: 1.6; }
+  .footer-cta .ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* === FOOTER === */
+  .bottom-row {
+    padding: 40px 0 80px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; color: #555; flex-wrap: wrap; gap: 16px;
+  }
+  .bottom-row .links { display: flex; gap: 24px; }
+  .bottom-row a { color: #888; }
+  .bottom-row a:hover { color: #e8c89a; }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 800px) {
+    .hero h1 { font-size: 56px; letter-spacing: -2px; }
+    .section-title { font-size: 36px; letter-spacing: -1px; }
+    .product-card, .product-card.flip {
+      grid-template-columns: 1fr; gap: 28px;
+    }
+    .product-card.flip .product-text { order: 0; }
+    .product-text h3 { font-size: 32px; }
+    .market { grid-template-columns: 1fr; gap: 36px; }
+    .footer-cta h2 { font-size: 38px; }
+    .footer-cta { padding: 40px 24px; }
+    .nav .brand .sub { display: none; }
+    .nav-link.hide-mobile { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<!-- ============ NAV ============ -->
+<div class="wrap">
+  <nav class="nav">
+    <div class="brand">pulse<i>.</i><span class="sub">for Brands</span></div>
+    <div class="nav-right">
+      <a href="#product" class="nav-link hide-mobile">Product</a>
+      <a href="#pricing" class="nav-link hide-mobile">Pricing</a>
+      <a href="./linesheet.html" class="nav-link hide-mobile">Live demo</a>
+      <a href="#join" class="nav-cta">Get on V1 list</a>
+    </div>
+  </nav>
+</div>
+
+<!-- ============ HERO ============ -->
+<div class="wrap">
+  <section class="hero">
+    <div class="eyebrow">Built for fashion labels doing $500K–$5M</div>
+    <h1>See what's <em>coming next</em>.<br>Ship line sheets in 60 seconds.<br>Run ads from one place.</h1>
+    <p class="lede">
+      pulse Brands is the operating system for emerging fashion labels. We do what <strong>WGSN charges retailers $50K/yr for</strong>, what your interns spend two weeks each season making, and what your founder shouldn't be doing at 11pm.
+    </p>
+    <div class="ctas">
+      <a href="./linesheet.html" class="btn btn-primary">See a real line sheet →</a>
+      <a href="#product" class="btn btn-ghost">How it works</a>
+    </div>
+    <div class="hero-meta">
+      <div><span class="l">V1 SHIPS</span> <span>Q3 2026</span></div>
+      <div><span class="l">PRICING FROM</span> <span>$49/mo</span></div>
+      <div><span class="l">ICP</span> <span>15K US brands · Shopify-native</span></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ THE PROBLEM ============ -->
+<div class="wrap">
+  <section class="section">
+    <div class="section-eyebrow">The problem</div>
+    <h2 class="section-title">Emerging brands fight <em>three</em> losing battles every season.</h2>
+    <p class="section-lede">Big houses have WGSN, McKinsey reports, and full studios. You have a Notion doc, a stylist DM thread, and 14 browser tabs of "what's trending right now." That gap is what pulse Brands closes.</p>
+
+    <div class="problem-grid">
+      <div class="prob">
+        <div class="num">i.</div>
+        <h4>Trend forecasting is gated</h4>
+        <p>WGSN, Trendalytics, Edited — all $20–50K/yr. Pinterest analytics are vague. TikTok signals are noisy. You guess, then you over-produce dead inventory.</p>
+        <div class="cost">$50K/yr · or you guess</div>
+      </div>
+      <div class="prob">
+        <div class="num">ii.</div>
+        <h4>Line sheets eat seasons alive</h4>
+        <p>Every drop, someone spends 8–16 hours in Photoshop manually building a buyer line sheet. SKUs, colorways, WSP, MOQ. Buyer wants a tweak — start over.</p>
+        <div class="cost">~$1,200 / drop · 4–8 drops/yr</div>
+      </div>
+      <div class="prob">
+        <div class="num">iii.</div>
+        <h4>Ad ops is duplicated work</h4>
+        <p>Meta, TikTok, Pinterest, your website. Same products, four sets of creative, four dashboards, four pixel setups. Your agency charges $5K/mo to do this badly.</p>
+        <div class="cost">$60K/yr · agency + waste</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ THE PRODUCT ============ -->
+<div class="wrap" id="product">
+  <section class="section">
+    <div class="section-eyebrow">The product</div>
+    <h2 class="section-title">One platform. Three weapons. <em>Trend, Sheet, Ads.</em></h2>
+    <p class="section-lede">Each module ships in order. Brands subscribe to one, two, or all three. Built so a small brand can scale a $1B house's intelligence at a tenth of the cost.</p>
+
+    <!-- ====== PRODUCT 1: TREND PULSE (the cool factor) ====== -->
+    <div class="product-card">
+      <div class="product-text">
+        <div class="badge v2">V2 · Q4 2026</div>
+        <h3>Trend Pulse — <em>see it</em> before it breaks.</h3>
+        <p>AI scans runway shows, Pinterest, TikTok, retail buy data, and street style — surfaces what's rising in your category, in your geography, with confidence scores.</p>
+        <ul>
+          <li>Past 90 days → Now → Next 60 day timeline per category</li>
+          <li>City-level signal (NY rising vs LA peaking)</li>
+          <li>Drop alerts: "Burgundy leather just crossed inflection — your call"</li>
+          <li>Source receipts: which runway, which influencer, which retailer moved first</li>
+        </ul>
+        <a href="./" class="product-cta">See the consumer Trend Pulse app →</a>
+      </div>
+      <div class="product-visual">
+        <div class="tv-head">TREND PULSE · USA · WOMENS · MAY 12</div>
+        <div class="tv-row">
+          <div class="tv-thumb"><img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=200&q=80"></div>
+          <div class="tv-info">
+            <div class="tv-name">Slouch Tailoring</div>
+            <div class="tv-src">TIKTOK +340% · MILAN FW</div>
+          </div>
+          <div class="tv-arrow a-rise">↑ RISE</div>
+        </div>
+        <div class="tv-row">
+          <div class="tv-thumb"><img src="https://images.unsplash.com/photo-1551489186-cf8726f514f8?w=200&q=80"></div>
+          <div class="tv-info">
+            <div class="tv-name">Burgundy Leather</div>
+            <div class="tv-src">PINTEREST +210% · 14D LIFT</div>
+          </div>
+          <div class="tv-arrow a-rise">↑ RISE</div>
+        </div>
+        <div class="tv-row">
+          <div class="tv-thumb"><img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=200&q=80"></div>
+          <div class="tv-info">
+            <div class="tv-name">Skinny Scarves</div>
+            <div class="tv-src">SOHO STREET · BELLA H. 3X</div>
+          </div>
+          <div class="tv-arrow a-peak">● PEAK</div>
+        </div>
+        <div class="tv-row" style="border:none;">
+          <div class="tv-thumb"><img src="https://images.unsplash.com/photo-1492447273231-0f8fecec1e3a?w=200&q=80"></div>
+          <div class="tv-info">
+            <div class="tv-name">Quiet Luxury</div>
+            <div class="tv-src">DOWN 18% / 30D</div>
+          </div>
+          <div class="tv-arrow a-fade">↓ FADE</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== PRODUCT 2: LINE SHEETS (the wedge) ====== -->
+    <div class="product-card flip">
+      <div class="product-visual">
+        <div class="tv-head">LINE SHEET · DAYDREAM DROP 06 · F/W 26</div>
+        <div class="ls-mini">
+          <div class="ls-prod"><img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=300&q=80"></div>
+          <div class="ls-prod"><img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=300&q=80"></div>
+          <div class="ls-prod"><img src="https://images.unsplash.com/photo-1551489186-cf8726f514f8?w=300&q=80"></div>
+        </div>
+        <div class="ls-mini-info">
+          <div><span class="lbl">DD26·101</span><span class="wsp">$145</span> <span class="srp">/ $290</span></div>
+          <div style="color:#4ade80;font-weight:700;">10 styles · 32 SKUs</div>
+        </div>
+      </div>
+      <div class="product-text">
+        <div class="badge v1">V1 · LAUNCH</div>
+        <h3>Line Sheets — buyer-ready in <em>60 seconds</em>.</h3>
+        <p>Sync your Shopify catalog. Pick a season. Brand it once. Every drop produces a buyer-ready PDF — SKUs, colorways, sizes, WSP, SRP, margin, fabric, MOQ, lead times. Send to a buyer in two clicks.</p>
+        <ul>
+          <li>Auto-pulls products, prices, variants from Shopify</li>
+          <li>Branded template (your fonts, colors, logo) — set up once</li>
+          <li>Buyer portal: shareable link, tracks who opened, who clicked SKUs</li>
+          <li>Rising / Peak / Fade tags pulled from Trend Pulse (when V2 ships)</li>
+          <li>Export PDF, share link, or sync to Joor / NuOrder / Cycle</li>
+        </ul>
+        <a href="./linesheet.html" class="product-cta">See a live line sheet →</a>
+      </div>
+    </div>
+
+    <!-- ====== PRODUCT 3: AD OPS ====== -->
+    <div class="product-card">
+      <div class="product-text">
+        <div class="badge v3">V3 · Q1 2027</div>
+        <h3>Ad Ops — <em>47 variants</em>, four platforms, one dashboard.</h3>
+        <p>Brief once. AI generates 20–50 ad variants (photo, text, carousel, video). You pick which go live. Auto-publishes to Meta / TikTok / Pinterest / your pulse feed. Performance dashboards roll up to one number that matters.</p>
+        <ul>
+          <li>Brief intake → AI generates ad creative variants</li>
+          <li>Connected to Meta / TikTok / Pinterest / Google APIs</li>
+          <li>Auto-publish toggle (or human-approval gate per platform)</li>
+          <li>Cross-platform attribution, single CTR / CPC view</li>
+          <li>"Generate more" — AI riffs on your top performers</li>
+        </ul>
+        <a href="./control.html" class="product-cta">See the Ad Ops dashboard →</a>
+      </div>
+      <div class="product-visual">
+        <div class="tv-head">AD OPS · DAYDREAM SPRING LAUNCH</div>
+        <div class="ao-grid">
+          <div class="ao-tile"><img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=200&q=80"><div class="ao-status">LIVE</div></div>
+          <div class="ao-tile"><img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=200&q=80"><div class="ao-status">LIVE</div></div>
+          <div class="ao-tile"><img src="https://images.unsplash.com/photo-1492447273231-0f8fecec1e3a?w=200&q=80"><div class="ao-status">LIVE</div></div>
+          <div class="ao-tile"><img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=200&q=80"><div class="ao-status">LIVE</div></div>
+          <div class="ao-tile"><img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=200&q=80"></div>
+          <div class="ao-tile"><img src="https://images.unsplash.com/photo-1551489186-cf8726f514f8?w=200&q=80"></div>
+          <div class="ao-tile"><img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=200&q=80"></div>
+          <div class="ao-tile"><img src="https://images.unsplash.com/photo-1542295669297-4d352b042bca?w=200&q=80"></div>
+        </div>
+        <div class="ao-mini-foot">
+          <span class="plat-chip pc-meta">Meta</span>
+          <span class="plat-chip pc-tt">TikTok</span>
+          <span class="plat-chip pc-pin">Pinterest</span>
+          <span class="plat-chip pc-pulse">pulse</span>
+          <span style="font-size:10px;color:#666;font-family:'JetBrains Mono',monospace;margin-left:auto;align-self:center;">47 variants · 12 live</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ PRICING ============ -->
+<div class="wrap" id="pricing">
+  <section class="section">
+    <div class="section-eyebrow">Pricing</div>
+    <h2 class="section-title">Pay for what you use. <em>Scale with your label.</em></h2>
+    <p class="section-lede">Brands subscribe to one, two, or all three modules. V1 (line sheets) ships first — everything else stacks on top.</p>
+
+    <div class="pricing-grid">
+      <div class="tier featured">
+        <div class="tname">Starter<span style="color:#e8c89a;">.</span></div>
+        <div class="twhen">Line Sheets · ships Q3 2026</div>
+        <div class="price"><em>$</em>49</div>
+        <div class="pmo">per month · billed annually</div>
+        <ul>
+          <li>Unlimited line sheets</li>
+          <li>Shopify sync</li>
+          <li>Branded PDF + share link</li>
+          <li>Buyer portal (tracks opens)</li>
+          <li>4 brand seats</li>
+          <li class="muted">Trend Pulse — Studio tier</li>
+          <li class="muted">Ad Ops — Atelier tier</li>
+        </ul>
+        <div class="tier-cta primary">Get on V1 list</div>
+      </div>
+
+      <div class="tier">
+        <div class="tname">Studio<span style="color:#e8c89a;">.</span></div>
+        <div class="twhen">+ Trend Pulse · Q4 2026</div>
+        <div class="price"><em>$</em>149</div>
+        <div class="pmo">per month · billed annually</div>
+        <ul>
+          <li>Everything in Starter</li>
+          <li>Trend Pulse — full feed</li>
+          <li>City + category signals</li>
+          <li>Weekly drop alerts</li>
+          <li>Source receipts</li>
+          <li>10 brand seats</li>
+          <li class="muted">Ad Ops — Atelier tier</li>
+        </ul>
+        <div class="tier-cta ghost">Waitlist</div>
+      </div>
+
+      <div class="tier">
+        <div class="tname">Atelier<span style="color:#e8c89a;">.</span></div>
+        <div class="twhen">+ Ad Ops · Q1 2027</div>
+        <div class="price"><em>$</em>399</div>
+        <div class="pmo">per month · billed annually</div>
+        <ul>
+          <li>Everything in Studio</li>
+          <li>Ad Ops dashboard</li>
+          <li>20-50 AI ad variants / drop</li>
+          <li>Meta / TikTok / Pinterest</li>
+          <li>Auto-publish + approval gates</li>
+          <li>Unlimited seats</li>
+          <li>Priority support</li>
+        </ul>
+        <div class="tier-cta ghost">Waitlist</div>
+      </div>
+
+      <div class="tier">
+        <div class="tname">Enterprise<span style="color:#e8c89a;">.</span></div>
+        <div class="twhen">White-label · 2027</div>
+        <div class="price" style="font-size:30px;line-height:1.2;">Let's<br>talk.</div>
+        <div class="pmo" style="margin-top:14px;">For multi-brand groups + agencies</div>
+        <ul>
+          <li>All modules</li>
+          <li>Multi-brand control panel</li>
+          <li>API access</li>
+          <li>White-label / custom domain</li>
+          <li>Dedicated account team</li>
+        </ul>
+        <div class="tier-cta ghost">Book a call</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ MARKET / WHY NOW ============ -->
+<div class="wrap">
+  <section class="section">
+    <div class="section-eyebrow">Why now</div>
+    <div class="market">
+      <div>
+        <h2 class="section-title" style="margin-bottom:20px;">A <em>$50M ARR</em> opportunity hiding in plain sight.</h2>
+        <p style="font-size:16px; line-height:1.7; color:#aaa;">15,000 US fashion brands do $500K–$5M revenue. 70% are on Shopify. None of them can afford WGSN. All of them ship 4–8 drops a year and burn weeks on the same three problems. The same generation that built Glossier, Cuts, Telfar grew up on Linear, Notion, Vercel — they expect their tools to feel like that. <strong style="color:#ddd;">No one's built it yet.</strong></p>
+        <p style="font-size:15px;line-height:1.7;color:#888;margin-top:18px;">Wedge in with line sheets ($49). Land 200 brands in year one = $117K ARR. Upsell to Studio ($149) = $358K ARR at 50% conversion. Atelier ($399) → 7-figure within 24 months.</p>
+      </div>
+      <div class="market-stats">
+        <div class="ms"><div class="v">15<em>K</em></div><div class="l">US brands · $500K–$5M</div></div>
+        <div class="ms"><div class="v">70<em>%</em></div><div class="l">on Shopify · easy integration</div></div>
+        <div class="ms"><div class="v">$50<em>M</em></div><div class="l">addressable ARR</div></div>
+        <div class="ms"><div class="v">0</div><div class="l">incumbents at this price point</div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ FOOTER CTA ============ -->
+<div class="wrap" id="join">
+  <div class="footer-cta">
+    <h2>Want pulse Brands<br>for <em>your label?</em></h2>
+    <p>V1 (line sheets) ships Q3. We're taking 50 brands into the founding cohort at a locked-in $29/mo for year one. After that, $49.</p>
+    <div class="ctas">
+      <a href="./linesheet.html" class="btn btn-primary">See the live demo →</a>
+      <a href="mailto:hello@pulse.fashion" class="btn btn-ghost">Book a call</a>
+    </div>
+  </div>
+
+  <div class="bottom-row">
+    <span>© 2026 pulse Brands · part of Agent Black</span>
+    <div class="links">
+      <a href="./linesheet.html">Line Sheet demo</a>
+      <a href="./control.html">Ad Ops preview</a>
+      <a href="./">Consumer app</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
